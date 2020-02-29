@@ -232,9 +232,9 @@ struct FunctionCallObfuscate : public FunctionPass {
     FunctionType *dlsym_type =
         FunctionType::get(Int8PtrTy, {Int8PtrTy, Int8PtrTy}, false);
     Function *dlopen_decl =
-        cast<Function>(M->getOrInsertFunction("dlopen", dlopen_type));
+        cast<Function>(M->getOrInsertFunction("dlopen", dlopen_type).getCallee());
     Function *dlsym_decl =
-        cast<Function>(M->getOrInsertFunction("dlsym", dlsym_type));
+        cast<Function>(M->getOrInsertFunction("dlsym", dlsym_type).getCallee());
     // Begin Iteration
     for (BasicBlock &BB : F) {
       for (auto I = BB.getFirstInsertionPt(), end = BB.end(); I != end; ++I) {
